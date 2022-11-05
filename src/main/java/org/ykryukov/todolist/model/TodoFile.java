@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.ykryukov.todolist.model.todo.Todo;
+
 @Entity
 @Table(schema = "todo", name = "todo_file")
 public class TodoFile {

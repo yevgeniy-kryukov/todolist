@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.ykryukov.todolist.model.*;
+import org.ykryukov.todolist.model.todo.TodoHibernate;
 
 @WebServlet("/delete")
 public class DeleteServlet extends HttpServlet {
@@ -25,7 +26,7 @@ public class DeleteServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			int id = Integer.parseInt(request.getParameter("id"));
-			TodoFileHibernate.deleteById(id);
+			new TodoHibernate().deleteById(id);
 			response.sendRedirect(request.getContextPath() + "/index");
 		} catch (Exception ex) {
 			getServletContext().getRequestDispatcher("/notfound.jsp").forward(request, response);

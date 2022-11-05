@@ -11,10 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.ykryukov.todolist.model.*;
+import org.ykryukov.todolist.model.todo.Dao;
+import org.ykryukov.todolist.model.todo.Todo;
+import org.ykryukov.todolist.model.todo.TodoHibernate;
 
 @WebServlet("/create")
 public class CreateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private final Dao<Todo> todoDao = new TodoHibernate();
 
 	public CreateServlet() {
 		super();
@@ -38,7 +43,7 @@ public class CreateServlet extends HttpServlet {
 			Timestamp dateTimeAction = Timestamp.valueOf(request.getParameter("dateTimeAction"));
 			String textAction = request.getParameter("textAction");
 			Todo todo = new Todo(dateTimeAction, textAction);
-			TodoHibernate.create(todo);
+			todoDao.create(todo);
 			response.sendRedirect(request.getContextPath() + "/index");
 		} catch (Exception ex) {
 			getServletContext().getRequestDispatcher("/view/create.jsp").forward(request, response);

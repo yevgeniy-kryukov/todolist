@@ -1,10 +1,12 @@
-package org.ykryukov.todolist.model;
+package org.ykryukov.todolist.model.todo;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class TodoJDBC {
-	public static ArrayList<Todo> select() {
+import org.ykryukov.todolist.model.ConnJDBC;
+
+public class TodoJDBC implements Dao<Todo> {
+	public ArrayList<Todo> getAll() {
 		ArrayList<Todo> todoList = new ArrayList<Todo>();
 		try {
 			try (Connection conn = ConnJDBC.getConnection()) {
@@ -28,7 +30,7 @@ public class TodoJDBC {
 		return todoList;
 	}
 
-	public static Todo selectOne(int id) {
+	public Todo getById(int id) {
 		Todo todo = null;
 		try {
 			try (Connection conn = ConnJDBC.getConnection()) {
@@ -51,7 +53,7 @@ public class TodoJDBC {
 		return todo;
 	}
 
-	public static int update(Todo todo) {
+	public void update(Todo todo) {
 		try {
 			try (Connection conn = ConnJDBC.getConnection()) {
 				String sql = "UPDATE todo.todo SET date_time_action = ?, text_action = ?, is_done = ? WHERE id = ?";
@@ -61,16 +63,16 @@ public class TodoJDBC {
 					preparedStatement.setBoolean(3, todo.getIsDone());
 					preparedStatement.setInt(4, todo.getId());
 
-					return preparedStatement.executeUpdate();
+					//return preparedStatement.executeUpdate();
 				}
 			}
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
-		return 0;
+		//return 0;
 	}
 
-	public static int insert(Todo todo) {
+	public void create(Todo todo) {
 		try {
 			try (Connection conn = ConnJDBC.getConnection()) {
 				String sql = "INSERT INTO todo.todo (date_time_action, text_action) VALUES (?, ?)";
@@ -78,28 +80,28 @@ public class TodoJDBC {
 					preparedStatement.setTimestamp(1, todo.getDateTimeAction());
 					preparedStatement.setString(2, todo.getTextAction());
 
-					return preparedStatement.executeUpdate();
+					//return preparedStatement.executeUpdate();
 				}
 			}
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
-		return 0;
+		//return 0;
 	}
 
-	public static int delete(int id) {
+	public void deleteById(int id) {
 		try {
 			try (Connection conn = ConnJDBC.getConnection()) {
 				String sql = "DELETE FROM todo.todo WHERE id = ?";
 				try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
 					preparedStatement.setInt(1, id);
 
-					return preparedStatement.executeUpdate();
+					//return preparedStatement.executeUpdate();
 				}
 			}
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
-		return 0;
+		//return 0;
 	}
 }

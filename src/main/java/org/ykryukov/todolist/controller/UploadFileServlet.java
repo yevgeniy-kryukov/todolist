@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import org.ykryukov.todolist.model.*;
+import org.ykryukov.todolist.model.todo.Dao;
+import org.ykryukov.todolist.model.todo.Todo;
+import org.ykryukov.todolist.model.todo.TodoHibernate;
 
 @WebServlet("/upload")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
@@ -22,6 +25,8 @@ import org.ykryukov.todolist.model.*;
 )
 public class UploadFileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private final Dao<Todo> todoDao = new TodoHibernate();
 
 	public UploadFileServlet() {
 		super();
@@ -87,7 +92,7 @@ public class UploadFileServlet extends HttpServlet {
 
 					part.write(uploadDirPath.getAbsolutePath() + "/" + newFullFileName);
 
-					Todo todo = TodoHibernate.getById(Integer.parseInt(request.getParameter("todoId")));
+					Todo todo = todoDao.getById(Integer.parseInt(request.getParameter("todoId")));
 
 					TodoFile todoFile = new TodoFile(todo, newFullFileName, uploadDir,
 							request.getParameter("fileDescription"));

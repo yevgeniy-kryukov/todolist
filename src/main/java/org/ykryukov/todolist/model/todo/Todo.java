@@ -1,4 +1,4 @@
-package org.ykryukov.todolist.model;
+package org.ykryukov.todolist.model.todo;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.ykryukov.todolist.model.TodoFile;
 
 @Entity
 @Table(schema = "todo", name = "todo")

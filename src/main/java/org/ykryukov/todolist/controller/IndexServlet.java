@@ -1,7 +1,8 @@
 package org.ykryukov.todolist.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,10 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.ykryukov.todolist.model.*;
+import org.ykryukov.todolist.model.todo.Dao;
+import org.ykryukov.todolist.model.todo.Todo;
+import org.ykryukov.todolist.model.todo.TodoHibernate;
 
 @WebServlet({ "/index", "" })
 public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private final Dao<Todo> todoDao = new TodoHibernate();
 
 	public IndexServlet() {
 		super();
@@ -23,7 +29,7 @@ public class IndexServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ArrayList<Todo> todoList = TodoHibernate.getAll();
+		List<Todo> todoList = todoDao.getAll();
 		request.setAttribute("todoList", todoList);
 		getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 	}

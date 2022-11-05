@@ -1,4 +1,4 @@
-package org.ykryukov.todolist.model;
+package org.ykryukov.todolist.model.todo;
 
 import java.util.ArrayList;
 
@@ -9,10 +9,11 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.ykryukov.todolist.model.ConnHibernate;
 
-public class TodoHibernate {
+public class TodoHibernate implements Dao<Todo> {
 
-	public static ArrayList<Todo> getAll() {
+	public ArrayList<Todo> getAll() {
 		Session session = ConnHibernate.getSession();
 
 		Transaction t = null;
@@ -46,7 +47,7 @@ public class TodoHibernate {
 		return todoList;
 	}
 
-	public static Todo getById(int id) {
+	public Todo getById(int id) {
 		Session session = ConnHibernate.getSession();
 		Transaction t = null;
 		Todo todo = null;
@@ -75,7 +76,7 @@ public class TodoHibernate {
 		return todo;
 	}
 
-	public static void update(Todo todo) {
+	public void update(Todo todo) {
 		Session session = ConnHibernate.getSession();
 		Transaction t = null;
 
@@ -92,7 +93,7 @@ public class TodoHibernate {
 		}
 	}
 
-	public static void create(Todo todo) {
+	public void create(Todo todo) {
 		Session session = ConnHibernate.getSession();
 		Transaction t = null;
 
@@ -109,7 +110,7 @@ public class TodoHibernate {
 		}
 	}
 
-	public static void deleteById(int id) {
+	public void deleteById(int id) {
 		Session session = ConnHibernate.getSession();
 		Transaction t = null;
 		Todo todo = getById(id);

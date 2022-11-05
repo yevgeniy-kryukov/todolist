@@ -10,10 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.ykryukov.todolist.model.*;
+import org.ykryukov.todolist.model.todo.Dao;
+import org.ykryukov.todolist.model.todo.Todo;
+import org.ykryukov.todolist.model.todo.TodoHibernate;
 
 @WebServlet("/edit")
 public class EditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private final Dao<Todo> todoDao = new TodoHibernate();
 
 	public EditServlet() {
 		super();
@@ -26,7 +31,7 @@ public class EditServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			int id = Integer.parseInt(request.getParameter("id"));
-			Todo todo = TodoHibernate.getById(id);
+			Todo todo = todoDao.getById(id);
 			if (todo != null) {
 				request.setAttribute("todo", todo);
 				getServletContext().getRequestDispatcher("/view/edit.jsp").forward(request, response);
@@ -49,7 +54,7 @@ public class EditServlet extends HttpServlet {
 			boolean isDone = Boolean.parseBoolean(request.getParameter("isDone"));
 			int id = Integer.parseInt(request.getParameter("id"));
 			Todo todo = new Todo(dateTimeAction, textAction, isDone, id);
-			TodoHibernate.update(todo);
+			todoDao.update(todo);
 			response.sendRedirect(request.getContextPath() + "/index");
 		} catch (Exception ex) {
 			getServletContext().getRequestDispatcher("/notfound.jsp").forward(request, response);
