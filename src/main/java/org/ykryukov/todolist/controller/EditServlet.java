@@ -53,8 +53,23 @@ public class EditServlet extends HttpServlet {
 			String textAction = request.getParameter("textAction");
 			boolean isDone = Boolean.parseBoolean(request.getParameter("isDone"));
 			int id = Integer.parseInt(request.getParameter("id"));
-			Todo todo = new Todo(dateTimeAction, textAction, isDone, id);
+			
+			Todo todo = todoDao.getById(id);
+			if (todo == null) {
+				getServletContext().getRequestDispatcher("/notfound.jsp").forward(request, response);
+				return;
+			}
+			
+			if (dateTimeAction == null || textAction.isEmpty()) {
+				doGet(request, response);
+				return;
+			}
+			
+			todo.setDateTimeAction(dateTimeAction);
+			todo.setDone(isDone);
+			todo.setTextAction(textAction);
 			todoDao.update(todo);
+			
 			response.sendRedirect(request.getContextPath() + "/index");
 		} catch (Exception ex) {
 			getServletContext().getRequestDispatcher("/notfound.jsp").forward(request, response);

@@ -84,5 +84,15 @@ public class TodoFile {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	public boolean isImage() {
+		if (this.fileName.indexOf(".") == -1) return false;
+		final String fileExt = this.fileName.split("\\.")[1];
+		final String[] arrFileExt = {"jpg", "png", "bmp"};
+		for(String el: arrFileExt) {
+			if (el.equals(fileExt)) return true;
+		}
+		return false;
+	}
 
 }

@@ -23,11 +23,13 @@
 	    <td>${todo.textAction}</td>
 	    <td align="center">${todo.isDone ? "да": "нет"}</td>
 	    <td>
-		    <a href='<c:url value="/edit?id=${todo.id}" />'>Изменить</a> |
-		    <form method="post" action='<c:url value="/delete" />' style="display:inline;">
-		        <input type="hidden" name="id" value="${todo.id}">
-		        <input type="submit" value="Удалить">
-		    </form>
+		    <a href='<c:url value="/edit?id=${todo.id}" />'>Изменить</a> 
+		    <c:if test="${!todo.isDone}">|
+			    <form method="post" action='<c:url value="/delete" />' style="display:inline;">
+			        <input type="hidden" name="id" value="${todo.id}">
+			        <input type="submit" value="Удалить">
+			    </form>
+		    </c:if>
 	 	</td>
 	 </tr>
 	</c:forEach>

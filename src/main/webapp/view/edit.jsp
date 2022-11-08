@@ -5,10 +5,23 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Изменить дело</title>
+	<script language="JavaScript">
+	function save() {
+		if (!formMain.dateTimeAction.value) {
+			alert("Ошибка! поле 'Запланированное дата и время дела' не заполнено");
+			return false;
+		}
+		if (!formMain.textAction.value) {
+			alert("Ошибка! поле 'Дело' не заполнено");
+			return false;
+		}
+		return true;
+	}
+	</script>
 </head>
 <body>
 	<h3>Изменить дело</h3>
-	<form method="post">
+	<form name="formMain" method="post">
 		<input type="hidden" value="${todo.id}" name="id" />
 		<label>Запланированное дата и время дела</label><br>
 		<input name="dateTimeAction" value="${todo.dateTimeAction}" type="text" size="50" /><br>
@@ -16,7 +29,7 @@
 		<input name="textAction" value="${todo.textAction}" type="text" size="150" /><br>
 		<label>Сделано?</label><br>
 		<input name="isDone" value="${todo.isDone}" type="checkbox" ${todo.isDone ? "checked": ""}  onClick="this.value = this.checked" /><br><br>
-		<input type="submit" value="Сохранить" />&nbsp;&nbsp;&nbsp;
+		<input type="submit" value="Сохранить" onClick = "return save()"/>&nbsp;&nbsp;&nbsp;
 		<input type="button" value="Вернуться в список" onClick = "window.location='<%=request.getContextPath()%>/index'">
 	</form>
 	<c:if test="${todo!=null}">
@@ -30,12 +43,16 @@
 	<c:forEach var="todoFile" items="${todo.getTodoFiles()}">
 	 <tr>
 	 	<td align="center">${todoFile.id}</td>
-	 	<td>${todoFile.fileDescription}</td>
-	 	<td><img src="upload/${todoFile.fileName}" height="50" width="50"/></td>
+	 	<td><a href="upload/${todoFile.fileName}" target="_blank">${todoFile.fileDescription}</a></td>
+	 	<td>
+	 		 <c:if test="${todoFile.isImage()}">
+	 			<img src="upload/${todoFile.fileName}" height="50" width="50"/>
+	 		</c:if>
+	 	</td>
 	 </tr>
 	</c:forEach>
 	</table><br>
-	<form method="post" action="<%=request.getContextPath()%>/upload" enctype="multipart/form-data">
+	<form method="post" action="<c:url value="upload" />" enctype="multipart/form-data">
 	<fieldset>
 	<legend>прикрепить файл</legend>
 		<input type="hidden" name="todoId" value="${todo.id}">

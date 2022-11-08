@@ -42,6 +42,12 @@ public class CreateServlet extends HttpServlet {
 		try {
 			Timestamp dateTimeAction = Timestamp.valueOf(request.getParameter("dateTimeAction"));
 			String textAction = request.getParameter("textAction");
+			
+			if (dateTimeAction == null || textAction.isEmpty()) {
+				doGet(request, response);
+				return;
+			}
+			
 			Todo todo = new Todo(dateTimeAction, textAction);
 			todoDao.create(todo);
 			response.sendRedirect(request.getContextPath() + "/index");
