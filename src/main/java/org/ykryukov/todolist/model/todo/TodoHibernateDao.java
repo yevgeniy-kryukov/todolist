@@ -11,7 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.ykryukov.todolist.model.ConnHibernate;
 
-public class TodoHibernate implements Dao<Todo> {
+public class TodoHibernateDao implements Dao<Todo> {
 
 	public ArrayList<Todo> getAll() {
 		Session session = ConnHibernate.getSession();

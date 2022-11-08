@@ -9,11 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.ykryukov.todolist.model.*;
-import org.ykryukov.todolist.model.todo.TodoHibernate;
+import org.ykryukov.todolist.model.todo.Dao;
+import org.ykryukov.todolist.model.todo.Todo;
+import org.ykryukov.todolist.model.todo.TodoHibernateDao;
 
 @WebServlet("/delete")
 public class DeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private final Dao<Todo> TodoDao = new TodoHibernateDao();
 
 	public DeleteServlet() {
 		super();
@@ -26,7 +30,7 @@ public class DeleteServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			int id = Integer.parseInt(request.getParameter("id"));
-			new TodoHibernate().deleteById(id);
+			TodoDao.deleteById(id);
 			response.sendRedirect(request.getContextPath() + "/index");
 		} catch (Exception ex) {
 			getServletContext().getRequestDispatcher("/notfound.jsp").forward(request, response);

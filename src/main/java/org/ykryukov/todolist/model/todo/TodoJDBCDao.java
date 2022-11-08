@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import org.ykryukov.todolist.model.ConnJDBC;
 
-public class TodoJDBC implements Dao<Todo> {
+public class TodoJDBCDao implements Dao<Todo> {
 	public ArrayList<Todo> getAll() {
 		ArrayList<Todo> todoList = new ArrayList<Todo>();
 		try {

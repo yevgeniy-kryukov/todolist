@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.ykryukov.todolist.model.*;
 import org.ykryukov.todolist.model.todo.Dao;
 import org.ykryukov.todolist.model.todo.Todo;
-import org.ykryukov.todolist.model.todo.TodoHibernate;
+import org.ykryukov.todolist.model.todo.TodoHibernateDao;
 
 @WebServlet("/create")
 public class CreateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private final Dao<Todo> todoDao = new TodoHibernate();
+	private final Dao<Todo> todoDao = new TodoHibernateDao();
 
 	public CreateServlet() {
 		super();
