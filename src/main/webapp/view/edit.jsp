@@ -49,10 +49,16 @@
 	 			<img src="upload/${todoFile.fileName}" height="50" width="50"/>
 	 		</c:if>
 	 	</td>
+	 	<td>
+ 			<form method="post" action='<c:url value="/delete/file" />' style="display:inline;">
+		        <input type="hidden" name="todoFileId" value="${todoFile.id}">
+		        <input type="submit" value="Удалить">
+		    </form>
+	 	</td>
 	 </tr>
 	</c:forEach>
 	</table><br>
-	<form method="post" action="<c:url value="upload" />" enctype="multipart/form-data">
+	<form method="post" action="<c:url value="upload/file" />" enctype="multipart/form-data">
 	<fieldset>
 	<legend>прикрепить файл</legend>
 		<input type="hidden" name="todoId" value="${todo.id}">

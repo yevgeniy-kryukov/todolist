@@ -17,7 +17,7 @@ import org.ykryukov.todolist.model.todo.TodoHibernateDao;
 public class DeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private final Dao<Todo> TodoDao = new TodoHibernateDao();
+	private static final Dao<Todo> TodoDao = new TodoHibernateDao();
 
 	public DeleteServlet() {
 		super();

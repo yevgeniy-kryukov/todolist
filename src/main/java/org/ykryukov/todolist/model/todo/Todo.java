@@ -15,7 +15,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.ykryukov.todolist.model.TodoFile;
+import org.ykryukov.todolist.model.todofile.TodoFile;
 
 @Entity
 @Table(schema = "todo", name = "todo")
@@ -36,7 +36,7 @@ public class Todo {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idSeqGen")
 	private int id;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "todo")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "todo")
 	@OrderBy("id DESC")
 	private List<TodoFile> todoFiles;
 

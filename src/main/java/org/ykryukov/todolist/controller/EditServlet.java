@@ -18,7 +18,7 @@ import org.ykryukov.todolist.model.todo.TodoHibernateDao;
 public class EditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private final Dao<Todo> todoDao = new TodoHibernateDao();
+	private static final Dao<Todo> todoDao = new TodoHibernateDao();
 
 	public EditServlet() {
 		super();

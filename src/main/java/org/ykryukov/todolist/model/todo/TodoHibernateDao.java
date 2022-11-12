@@ -54,15 +54,15 @@ public class TodoHibernateDao implements Dao<Todo> {
 
 		try {
 			t = session.beginTransaction();
-			//todo = session.get(Todo.class, id);
-			
-			CriteriaBuilder cb = session.getCriteriaBuilder();
-			CriteriaQuery<Todo> c = cb.createQuery(Todo.class);
-			Root<Todo> root = c.from(Todo.class);
-			root.fetch("todoFiles", JoinType.LEFT);
-			c.where(cb.equal(root.get("id"), id));
-			c.select(root);
-			todo = session.createQuery(c).getSingleResult();
+			todo = session.get(Todo.class, id);
+// if LAZY			
+//			CriteriaBuilder cb = session.getCriteriaBuilder();
+//			CriteriaQuery<Todo> c = cb.createQuery(Todo.class);
+//			Root<Todo> root = c.from(Todo.class);
+//			root.fetch("todoFiles", JoinType.LEFT);
+//			c.where(cb.equal(root.get("id"), id));
+//			c.select(root);
+//			todo = session.createQuery(c).getSingleResult();
 			
 			t.commit();
 		} catch (Exception ex) {

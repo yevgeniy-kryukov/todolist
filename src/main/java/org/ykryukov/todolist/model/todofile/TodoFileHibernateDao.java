@@ -1,18 +1,20 @@
-package org.ykryukov.todolist.model;
+package org.ykryukov.todolist.model.todofile;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.ykryukov.todolist.model.ConnHibernate;
 
-public class TodoFileHibernate {
-
-	public static TodoFile getById(int id) {
+public class TodoFileHibernateDao implements Dao<TodoFile> {
+	
+	public TodoFile getById(int id) {
 		Session session = ConnHibernate.getSession();
 		Transaction t = null;
-		TodoFile todoFile = null;
+		TodoFile todofile = null;
 
 		try {
 			t = session.beginTransaction();
-			todoFile = session.get(TodoFile.class, id);
+			todofile = session.get(TodoFile.class, id);
+			
 			t.commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -22,27 +24,10 @@ public class TodoFileHibernate {
 				session.close();
 		}
 
-		return todoFile;
+		return todofile;
 	}
 
-	public static void update(TodoFile todoFile) {
-		Session session = ConnHibernate.getSession();
-		Transaction t = null;
-
-		try {
-			t = session.beginTransaction();
-			session.update(todoFile);
-			t.commit();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			t.rollback();
-		} finally {
-			if (session != null)
-				session.close();
-		}
-	}
-
-	public static void create(TodoFile todoFile) {
+	public void create(TodoFile todoFile) {
 		Session session = ConnHibernate.getSession();
 		Transaction t = null;
 
@@ -59,11 +44,9 @@ public class TodoFileHibernate {
 		}
 	}
 
-	public static void deleteById(int id) {
+	public void delete(TodoFile todoFile) {
 		Session session = ConnHibernate.getSession();
 		Transaction t = null;
-		TodoFile todoFile = new TodoFile();
-		todoFile.setId(id);
 
 		try {
 			t = session.beginTransaction();

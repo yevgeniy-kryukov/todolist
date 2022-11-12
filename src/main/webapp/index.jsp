@@ -24,7 +24,7 @@
 	    <td align="center">${todo.isDone ? "да": "нет"}</td>
 	    <td>
 		    <a href='<c:url value="/edit?id=${todo.id}" />'>Изменить</a> 
-		    <c:if test="${!todo.isDone}">|
+		    <c:if test="${!todo.isDone && todo.getTodoFiles().size() == 0}">|
 			    <form method="post" action='<c:url value="/delete" />' style="display:inline;">
 			        <input type="hidden" name="id" value="${todo.id}">
 			        <input type="submit" value="Удалить">

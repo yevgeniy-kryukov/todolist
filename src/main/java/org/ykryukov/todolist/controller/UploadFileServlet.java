@@ -14,19 +14,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import org.ykryukov.todolist.model.*;
-import org.ykryukov.todolist.model.todo.Dao;
 import org.ykryukov.todolist.model.todo.Todo;
 import org.ykryukov.todolist.model.todo.TodoHibernateDao;
+import org.ykryukov.todolist.model.todofile.TodoFile;
+import org.ykryukov.todolist.model.todofile.TodoFileHibernateDao;
 
-@WebServlet("/upload")
+@WebServlet("/upload/file")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
 		maxFileSize = 1024 * 1024 * 10, // 10 MB
 		maxRequestSize = 1024 * 1024 * 100 // 100 MB
 )
 public class UploadFileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private final Dao<Todo> todoDao = new TodoHibernateDao();
+
+	private static final org.ykryukov.todolist.model.todo.Dao<Todo> todoDao = new TodoHibernateDao();
+
+	private static final org.ykryukov.todolist.model.todofile.Dao<TodoFile> todoFileDao = new TodoFileHibernateDao();
 
 	public UploadFileServlet() {
 		super();
@@ -65,39 +68,44 @@ public class UploadFileServlet extends HttpServlet {
 		return fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
 	}
 
+	private String saveFile(Part part) throws IOException {
+		final String relativeWebPath = ""; // "/WEB-INF";
+		final String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
+		final String uploadDir = "upload";
+
+		final File uploadDirPath = new File(absoluteDiskPath + uploadDir);
+		if (!uploadDirPath.exists()) {
+			uploadDirPath.mkdirs();
+		}
+
+		final String fullFileName = getUploadFileName(part);
+		final String fileExtension = getFileExt(fullFileName);
+		final String newFullFileName = UUID.randomUUID() + "." + fileExtension;
+
+		part.write(uploadDirPath.getAbsolutePath() + "/" + newFullFileName);
+
+		return uploadDir + "/" + newFullFileName;
+	}
+
 	/**
+	 * @throws IOException 
 	 * @override
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			String fullFileName = null;
-			String newFullFileName = null;
-			String fileExtension = null;
-
-			final String relativeWebPath = ""; // "/WEB-INF";
-			final String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
-			final String uploadDir = "upload";
-
-			File uploadDirPath = new File(absoluteDiskPath + uploadDir);
-			if (!uploadDirPath.exists()) {
-				uploadDirPath.mkdirs();
-			}
+			String uploadPath = null;
 
 			for (Part part : request.getParts()) {
 				if (part.getContentType() != null) { // it is file
-					fullFileName = getUploadFileName(part);
-					fileExtension = getFileExt(fullFileName);
-					newFullFileName = UUID.randomUUID() + "." + fileExtension;
-
-					part.write(uploadDirPath.getAbsolutePath() + "/" + newFullFileName);
+					uploadPath = saveFile(part);
 
 					Todo todo = todoDao.getById(Integer.parseInt(request.getParameter("todoId")));
 
-					TodoFile todoFile = new TodoFile(todo, newFullFileName, uploadDir,
+					TodoFile todoFile = new TodoFile(todo, uploadPath.split("/")[1], uploadPath.split("/")[0],
 							request.getParameter("fileDescription"));
 
-					TodoFileHibernate.create(todoFile);
+					todoFileDao.create(todoFile);
 
 					// response.getWriter().print("The file uploaded sucessfully.");
 

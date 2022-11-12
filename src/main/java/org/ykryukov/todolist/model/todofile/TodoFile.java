@@ -1,4 +1,4 @@
-package org.ykryukov.todolist.model;
+package org.ykryukov.todolist.model.todofile;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
