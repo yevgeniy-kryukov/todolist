@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.ykryukov.holidays.client.HolidaysWebServiceClient;
+//import org.ykryukov.holidays.client.HolidaysWebServiceClient;
 
 /**
  * Servlet implementation class IndexServletHoliday
@@ -32,13 +32,13 @@ public class IndexServletHoliday extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HolidaysWebServiceClient holidaysWebServiceClient = new HolidaysWebServiceClient();
-
-		// обращаемся к веб-сервису и выводим результат в консоль
-		List<String> holidays = holidaysWebServiceClient.holidaysWS.getHolidays().getItem();
-		for (String item : holidays) {
-			response.getWriter().write(item + "<br>");
-		}
+//		HolidaysWebServiceClient holidaysWebServiceClient = new HolidaysWebServiceClient();
+//
+//		// обращаемся к веб-сервису и выводим результат в консоль
+//		List<String> holidays = holidaysWebServiceClient.holidaysWS.getHolidays().getItem();
+//		for (String item : holidays) {
+//			response.getWriter().write(item + "<br>");
+//		}
 	}
 
 	/**
