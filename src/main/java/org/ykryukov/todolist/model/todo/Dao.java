@@ -10,7 +10,7 @@ public interface Dao<T> {
 	
 	void update(T todo);
 	
-	void create(T todo);
+	T create(T todo);
 	
 	void deleteById(int id);
 }

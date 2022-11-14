@@ -96,4 +96,9 @@ public class Todo {
 		this.id = id;
 	}
 
+	@Override
+	public String toString() {
+		return "Todo [dateTimeAction=" + dateTimeAction + ", textAction=" + textAction + ", isDone=" + isDone + ", id="
+				+ id + ", todoFiles=" + todoFiles + "]";
+	}
 }

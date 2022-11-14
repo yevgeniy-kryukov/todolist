@@ -92,13 +92,13 @@ public class TodoHibernateDao implements Dao<Todo> {
 		}
 	}
 
-	public void create(Todo todo) {
+	public Todo create(Todo todo) {
 		Session session = ConnHibernate.getSession();
 		Transaction t = null;
 
 		try {
 			t = session.beginTransaction();
-			session.save(todo);
+			todo.setId((int) session.save(todo));
 			t.commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -107,6 +107,8 @@ public class TodoHibernateDao implements Dao<Todo> {
 			if (session != null)
 				session.close();
 		}
+		
+		return todo;
 	}
 
 	public void deleteById(int id) {

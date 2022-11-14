@@ -72,13 +72,18 @@ public class TodoJDBCDao implements Dao<Todo> {
 		//return 0;
 	}
 
-	public void create(Todo todo) {
+	public Todo create(Todo todo) {
 		try {
 			try (Connection conn = ConnJDBC.getConnection()) {
-				String sql = "INSERT INTO todo.todo (date_time_action, text_action) VALUES (?, ?)";
+				String sql = "INSERT INTO todo.todo (id, date_time_action, text_action) "
+						+ "VALUES (nextval('todo.todo_seq'), ?, ?) RETURNS id";
 				try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
 					preparedStatement.setTimestamp(1, todo.getDateTimeAction());
 					preparedStatement.setString(2, todo.getTextAction());
+					ResultSet resultset = preparedStatement.executeQuery();
+					if (resultset.next()) {
+						todo.setId(resultset.getInt("id"));
+					}
 
 					//return preparedStatement.executeUpdate();
 				}
@@ -86,7 +91,8 @@ public class TodoJDBCDao implements Dao<Todo> {
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
-		//return 0;
+		
+		return todo;
 	}
 
 	public void deleteById(int id) {
