@@ -33,7 +33,7 @@ public class Todo {
 	@Column(name = "id", unique = true, nullable = false)
 	@SequenceGenerator(name = "idSeqGen", sequenceName = "todo.todo_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idSeqGen")
-	private int id;
+	private Integer id;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "todo")
 	@OrderBy("id DESC")
@@ -56,7 +56,7 @@ public class Todo {
 		setTextAction(textAction);
 	}
 
-	public Todo(Timestamp dateTimeAction, String textAction, boolean isDone, int id) {
+	public Todo(Timestamp dateTimeAction, String textAction, boolean isDone, Integer id) {
 		super();
 		setDateTimeAction(dateTimeAction);
 		setTextAction(textAction);
@@ -88,11 +88,11 @@ public class Todo {
 		this.isDone = isDone;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

@@ -52,7 +52,7 @@ public class DeleteFileServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 
-			TodoFile todofile = todoFileDao.getById(Integer.parseInt(request.getParameter("todoFileId")));
+			TodoFile todofile = todoFileDao.getById(new Integer(request.getParameter("todoFileId")));
 
 			if (deleteFile(todofile.getFileName(), todofile.getFilePath()))
 				todoFileDao.delete(todofile);

@@ -6,7 +6,7 @@ import org.ykryukov.todolist.model.ConnHibernate;
 
 public class TodoFileHibernateDao implements Dao<TodoFile> {
 	
-	public TodoFile getById(int id) {
+	public TodoFile getById(Integer id) {
 		Session session = ConnHibernate.getSession();
 		Transaction t = null;
 		TodoFile todofile = null;

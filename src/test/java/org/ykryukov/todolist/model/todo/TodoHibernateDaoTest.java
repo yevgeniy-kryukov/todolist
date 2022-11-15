@@ -18,8 +18,8 @@ public class TodoHibernateDaoTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		final Integer dif =  86400000;
-		final Long curMil = System.currentTimeMillis();
+		final int dif =  86400000;
+		final long curMil = System.currentTimeMillis();
 		
 		for (Todo todo : todoHibernateDao.getAll()) {
 			todoHibernateDao.deleteById(todo.getId());
@@ -29,7 +29,7 @@ public class TodoHibernateDaoTest {
 		
 		for (int i = 0; i < 1000; i++) {
 			Todo todo = new Todo(new Timestamp(curMil + dif * i), "todo" + i);
-			todoHibernateDao.create(todo);
+			todo.setId(todoHibernateDao.create(todo));
 			todos.add(todo);
 			//System.out.println(todo);
 		}
@@ -68,7 +68,7 @@ public class TodoHibernateDaoTest {
 		final int size = todos.size();
 		final String textDesc = "todo" + size + 1;
 		final Todo todo = new Todo(new Timestamp(System.currentTimeMillis()), textDesc);
-		todoHibernateDao.create(todo);
+		todo.setId(todoHibernateDao.create(todo));
 		todos.add(todo);
 		final int sizeNew = todoHibernateDao.getAll().size();
 		assertTrue(sizeNew > size);
@@ -77,7 +77,7 @@ public class TodoHibernateDaoTest {
 
 	@Test
 	public void testDeleteById() {
-		final int id = todos.get(0).getId();
+		final Integer id = todos.get(0).getId();
 		final int size = todos.size();
 		todoHibernateDao.deleteById(id);
 		todos.remove(0);

@@ -6,11 +6,11 @@ public interface Dao<T> {
 	
 	List<T> getAll();
 	
-	T getById(int id);
+	T getById(Integer id);
 	
 	void update(T todo);
 	
-	T create(T todo);
+	Integer create(T todo);
 	
-	void deleteById(int id);
+	void deleteById(Integer id);
 }

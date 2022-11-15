@@ -29,7 +29,7 @@ public class DeleteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			int id = Integer.parseInt(request.getParameter("id"));
+			Integer id = new Integer(request.getParameter("id"));
 			TodoDao.deleteById(id);
 			response.sendRedirect(request.getContextPath() + "/index");
 		} catch (Exception ex) {

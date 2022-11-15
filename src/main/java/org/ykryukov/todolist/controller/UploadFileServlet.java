@@ -100,7 +100,7 @@ public class UploadFileServlet extends HttpServlet {
 				if (part.getContentType() != null) { // it is file
 					uploadPath = saveFile(part);
 
-					Todo todo = todoDao.getById(Integer.parseInt(request.getParameter("todoId")));
+					Todo todo = todoDao.getById(new Integer(request.getParameter("todoId")));
 
 					TodoFile todoFile = new TodoFile(todo, uploadPath.split("/")[1], uploadPath.split("/")[0],
 							request.getParameter("fileDescription"));

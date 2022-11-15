@@ -30,7 +30,7 @@ public class EditServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			int id = Integer.parseInt(request.getParameter("id"));
+			Integer id = new Integer(request.getParameter("id"));
 			Todo todo = todoDao.getById(id);
 			if (todo != null) {
 				request.setAttribute("todo", todo);
@@ -52,7 +52,7 @@ public class EditServlet extends HttpServlet {
 			Timestamp dateTimeAction = Timestamp.valueOf(request.getParameter("dateTimeAction"));
 			String textAction = request.getParameter("textAction");
 			boolean isDone = Boolean.parseBoolean(request.getParameter("isDone"));
-			int id = Integer.parseInt(request.getParameter("id"));
+			Integer id = new Integer(request.getParameter("id"));
 			
 			Todo todo = todoDao.getById(id);
 			if (todo == null) {

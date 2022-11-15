@@ -1,7 +1,7 @@
 package org.ykryukov.todolist.model.todofile;
 
 public interface Dao<T> {
-	T getById(int id);
+	T getById(Integer id);
 	
 	void create(T todo);
 	

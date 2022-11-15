@@ -33,7 +33,7 @@ public class TodoFile {
 	@Column(name = "id", unique = true, nullable = false)
 	@SequenceGenerator(name = "idSeqGen", sequenceName = "todo.todo_file_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idSeqGen")
-	private int id;
+	private Integer id;
 
 	public TodoFile() {
 	}
@@ -77,11 +77,11 @@ public class TodoFile {
 		this.fileDescription = fileDescription;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	

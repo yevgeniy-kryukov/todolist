@@ -46,7 +46,7 @@ public class TodoHibernateDao implements Dao<Todo> {
 		return todoList;
 	}
 
-	public Todo getById(int id) {
+	public Todo getById(Integer id) {
 		Session session = ConnHibernate.getSession();
 		Transaction t = null;
 		Todo todo = null;
@@ -92,13 +92,14 @@ public class TodoHibernateDao implements Dao<Todo> {
 		}
 	}
 
-	public Todo create(Todo todo) {
+	public Integer create(Todo todo) {
 		Session session = ConnHibernate.getSession();
 		Transaction t = null;
+		Integer id = 0;
 
 		try {
 			t = session.beginTransaction();
-			todo.setId((int) session.save(todo));
+			id = (Integer) session.save(todo);
 			t.commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -108,10 +109,10 @@ public class TodoHibernateDao implements Dao<Todo> {
 				session.close();
 		}
 		
-		return todo;
+		return id;
 	}
 
-	public void deleteById(int id) {
+	public void deleteById(Integer id) {
 		Session session = ConnHibernate.getSession();
 		Transaction t = null;
 		Todo todo = getById(id);

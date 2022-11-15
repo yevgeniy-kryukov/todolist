@@ -17,7 +17,7 @@ public class TodoJDBCDao implements Dao<Todo> {
 						Timestamp dateTimeAction = resultset.getTimestamp(1);
 						String textAction = resultset.getString(2);
 						boolean isDone = resultset.getBoolean(3);
-						int id = resultset.getInt(4);
+						Integer id = resultset.getInt(4);
 
 						Todo todo = new Todo(dateTimeAction, textAction, isDone, id);
 						todoList.add(todo);
@@ -30,7 +30,7 @@ public class TodoJDBCDao implements Dao<Todo> {
 		return todoList;
 	}
 
-	public Todo getById(int id) {
+	public Todo getById(Integer id) {
 		Todo todo = null;
 		try {
 			try (Connection conn = ConnJDBC.getConnection()) {
@@ -72,7 +72,9 @@ public class TodoJDBCDao implements Dao<Todo> {
 		//return 0;
 	}
 
-	public Todo create(Todo todo) {
+	public Integer create(Todo todo) {
+		Integer id = 0;
+		
 		try {
 			try (Connection conn = ConnJDBC.getConnection()) {
 				String sql = "INSERT INTO todo.todo (id, date_time_action, text_action) "
@@ -82,7 +84,7 @@ public class TodoJDBCDao implements Dao<Todo> {
 					preparedStatement.setString(2, todo.getTextAction());
 					ResultSet resultset = preparedStatement.executeQuery();
 					if (resultset.next()) {
-						todo.setId(resultset.getInt("id"));
+						id = resultset.getInt("id");
 					}
 
 					//return preparedStatement.executeUpdate();
@@ -92,10 +94,10 @@ public class TodoJDBCDao implements Dao<Todo> {
 			System.out.println(ex);
 		}
 		
-		return todo;
+		return id;
 	}
 
-	public void deleteById(int id) {
+	public void deleteById(Integer id) {
 		try {
 			try (Connection conn = ConnJDBC.getConnection()) {
 				String sql = "DELETE FROM todo.todo WHERE id = ?";
