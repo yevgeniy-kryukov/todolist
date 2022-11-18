@@ -27,13 +27,14 @@ public class TodoFileHibernateDao implements Dao<TodoFile> {
 		return todofile;
 	}
 
-	public void create(TodoFile todoFile) {
+	public Integer create(TodoFile todoFile) {
 		Session session = ConnHibernate.getSession();
 		Transaction t = null;
+		Integer id = null;
 
 		try {
 			t = session.beginTransaction();
-			session.save(todoFile);
+			id = (Integer) session.save(todoFile);
 			t.commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -42,6 +43,8 @@ public class TodoFileHibernateDao implements Dao<TodoFile> {
 			if (session != null)
 				session.close();
 		}
+
+		return id;
 	}
 
 	public void delete(TodoFile todoFile) {

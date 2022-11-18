@@ -6,24 +6,42 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.ykryukov.todolist.model.ConnHibernate;
 
 public class TodoHibernateDaoTest {
 	
-	private final static TodoHibernateDao todoHibernateDao = new TodoHibernateDao();
+	private final static Dao<Todo> todoHibernateDao = new TodoHibernateDao();
 	
 	private static List<Todo> todos;
 
+	private static void clearTables() {
+		Session session = ConnHibernate.getSession();
+		Transaction t = null;
+
+		try {
+			t = session.beginTransaction();
+			session.createNativeQuery("truncate table todo.todo cascade").executeUpdate();
+			t.commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			t.rollback();
+		} finally {
+			if (session != null)
+				session.close();
+		}
+	}
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		clearTables();
+
 		final int dif =  86400000;
 		final long curMil = System.currentTimeMillis();
-		
-		for (Todo todo : todoHibernateDao.getAll()) {
-			todoHibernateDao.deleteById(todo.getId());
-		}
 		
 		todos = new ArrayList<Todo>();
 		
@@ -31,16 +49,13 @@ public class TodoHibernateDaoTest {
 			Todo todo = new Todo(new Timestamp(curMil + dif * i), "todo" + i);
 			todo.setId(todoHibernateDao.create(todo));
 			todos.add(todo);
-			//System.out.println(todo);
 		}
 		
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		for (Todo todo : todos) {
-			todoHibernateDao.deleteById(todo.getId());
-		}
+		clearTables();
 	}
 
 	@Test
