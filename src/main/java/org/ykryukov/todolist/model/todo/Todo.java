@@ -2,6 +2,7 @@ package org.ykryukov.todolist.model.todo;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,6 +49,22 @@ public class Todo {
 	}
 
 	public Todo() {
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Todo)) return false;
+		Todo todo = (Todo) o;
+		return isDone == todo.isDone
+				&& dateTimeAction.equals(todo.dateTimeAction)
+				&& textAction.equals(todo.textAction)
+				&& id.equals(todo.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
 	}
 
 	public Todo(Timestamp dateTimeAction, String textAction) {

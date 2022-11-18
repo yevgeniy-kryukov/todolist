@@ -68,7 +68,7 @@ public class TodoFileHibernateDaoTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		clearTables();
+		//clearTables();
 
 		todo = new Todo(new Timestamp(System.currentTimeMillis()), "todo1");
 		todo.setId(todoHibernateDao.create(todo));
@@ -85,7 +85,11 @@ public class TodoFileHibernateDaoTest {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		clearTables();
+		//clearTables();
+		for (TodoFile todoFile : todoFiles) {
+			todoFileHibernateDao.delete(todoFile);
+		}
+		todoHibernateDao.deleteById(todo.getId());
 	}
 
 	@Test
