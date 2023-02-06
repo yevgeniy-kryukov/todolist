@@ -24,7 +24,7 @@ import org.ykryukov.todolist.model.todofile.TodoFileHibernateDao;
 		maxFileSize = 1024 * 1024 * 10, // 10 MB
 		maxRequestSize = 1024 * 1024 * 100 // 100 MB
 )
-public class UploadFileServlet extends HttpServlet {
+public class UploadFileServlet extends MyServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static final org.ykryukov.todolist.model.todo.Dao<Todo> todoDao = new TodoHibernateDao();
@@ -117,13 +117,6 @@ public class UploadFileServlet extends HttpServlet {
 			ex.printStackTrace();
 			response.getWriter().print(ex.getMessage());
 		}
-	}
-
-	/**
-	 * @override
-	 */
-	public void destroy() {
-		ConnHibernate.getInstance().closeAll();
 	}
 
 }

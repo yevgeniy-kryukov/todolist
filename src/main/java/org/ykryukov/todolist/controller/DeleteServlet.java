@@ -14,7 +14,7 @@ import org.ykryukov.todolist.model.todo.Todo;
 import org.ykryukov.todolist.model.todo.TodoHibernateDao;
 
 @WebServlet("/delete")
-public class DeleteServlet extends HttpServlet {
+public class DeleteServlet extends MyServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private static final Dao<Todo> TodoDao = new TodoHibernateDao();
@@ -35,13 +35,6 @@ public class DeleteServlet extends HttpServlet {
 		} catch (Exception ex) {
 			getServletContext().getRequestDispatcher("/notfound.jsp").forward(request, response);
 		}
-	}
-
-	/**
-	 * @override
-	 */
-	public void destroy() {
-		ConnHibernate.getInstance().closeAll();
 	}
 
 }

@@ -21,7 +21,7 @@ public class TodoHibernateDaoTest {
     private static List<Todo> todos;
 
     private static void clearTables() {
-        Session session = ConnHibernate.getSession();
+        Session session = ConnHibernate.getInstance().getSession();
         Transaction t = null;
 
         try {

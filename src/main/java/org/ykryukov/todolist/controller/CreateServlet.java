@@ -16,7 +16,7 @@ import org.ykryukov.todolist.model.todo.Todo;
 import org.ykryukov.todolist.model.todo.TodoHibernateDao;
 
 @WebServlet("/create")
-public class CreateServlet extends HttpServlet {
+public class CreateServlet extends MyServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private static final Dao<Todo> todoDao = new TodoHibernateDao();
@@ -54,13 +54,6 @@ public class CreateServlet extends HttpServlet {
 		} catch (Exception ex) {
 			getServletContext().getRequestDispatcher("/view/create.jsp").forward(request, response);
 		}
-	}
-
-	/**
-	 * @override
-	 */
-	public void destroy() {
-		ConnHibernate.getInstance().closeAll();
 	}
 
 }

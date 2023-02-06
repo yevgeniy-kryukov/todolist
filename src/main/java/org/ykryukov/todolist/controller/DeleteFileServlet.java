@@ -14,7 +14,7 @@ import org.ykryukov.todolist.model.todofile.TodoFile;
 import org.ykryukov.todolist.model.todofile.TodoFileHibernateDao;
 
 @WebServlet("/delete/file")
-public class DeleteFileServlet extends HttpServlet {
+public class DeleteFileServlet extends MyServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static final org.ykryukov.todolist.model.todofile.Dao<TodoFile> todoFileDao = new TodoFileHibernateDao();
@@ -63,13 +63,6 @@ public class DeleteFileServlet extends HttpServlet {
 			ex.printStackTrace();
 			response.getWriter().print(ex.getMessage());
 		}
-	}
-
-	/**
-	 * @override
-	 */
-	public void destroy() {
-		ConnHibernate.getInstance().closeAll();
 	}
 
 }

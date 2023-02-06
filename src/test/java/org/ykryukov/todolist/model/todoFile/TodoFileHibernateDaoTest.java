@@ -29,7 +29,7 @@ public class TodoFileHibernateDaoTest {
 	private static Todo todo;
 
 	private static void clearTables() {
-		Session session = ConnHibernate.getSession();
+		Session session = ConnHibernate.getInstance().getSession();
 		Transaction t = null;
 
 		try {
@@ -47,7 +47,7 @@ public class TodoFileHibernateDaoTest {
 	}
 
 	private static BigInteger getTodoFileSize() {
-		Session session = ConnHibernate.getSession();
+		Session session = ConnHibernate.getInstance().getSession();
 		Transaction t = null;
 		BigInteger sizeNew = BigInteger.valueOf(0);
 
