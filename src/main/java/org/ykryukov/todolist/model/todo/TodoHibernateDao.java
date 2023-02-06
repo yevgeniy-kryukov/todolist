@@ -13,7 +13,7 @@ import org.ykryukov.todolist.model.ConnHibernate;
 public class TodoHibernateDao implements Dao<Todo> {
 
 	public ArrayList<Todo> getAll() {
-		Session session = ConnHibernate.getSession();
+		Session session = ConnHibernate.getInstance().getSession();
 
 		Transaction t = null;
 		ArrayList<Todo> todoList = null;
@@ -47,7 +47,7 @@ public class TodoHibernateDao implements Dao<Todo> {
 	}
 
 	public Todo getById(Integer id) {
-		Session session = ConnHibernate.getSession();
+		Session session = ConnHibernate.getInstance().getSession();
 		Transaction t = null;
 		Todo todo = null;
 
@@ -76,7 +76,7 @@ public class TodoHibernateDao implements Dao<Todo> {
 	}
 
 	public void update(Todo todo) {
-		Session session = ConnHibernate.getSession();
+		Session session = ConnHibernate.getInstance().getSession();
 		Transaction t = null;
 
 		try {
@@ -93,7 +93,7 @@ public class TodoHibernateDao implements Dao<Todo> {
 	}
 
 	public Integer create(Todo todo) {
-		Session session = ConnHibernate.getSession();
+		Session session = ConnHibernate.getInstance().getSession();
 		Transaction t = null;
 		Integer id = 0;
 
@@ -113,7 +113,7 @@ public class TodoHibernateDao implements Dao<Todo> {
 	}
 
 	public void deleteById(Integer id) {
-		Session session = ConnHibernate.getSession();
+		Session session = ConnHibernate.getInstance().getSession();
 		Transaction t = null;
 		Todo todo = getById(id);
 		todo.setId(id);

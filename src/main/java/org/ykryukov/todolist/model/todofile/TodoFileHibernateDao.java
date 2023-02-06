@@ -7,7 +7,7 @@ import org.ykryukov.todolist.model.ConnHibernate;
 public class TodoFileHibernateDao implements Dao<TodoFile> {
 	
 	public TodoFile getById(Integer id) {
-		Session session = ConnHibernate.getSession();
+		Session session = ConnHibernate.getInstance().getSession();
 		Transaction t = null;
 		TodoFile todofile = null;
 
@@ -28,7 +28,7 @@ public class TodoFileHibernateDao implements Dao<TodoFile> {
 	}
 
 	public Integer create(TodoFile todoFile) {
-		Session session = ConnHibernate.getSession();
+		Session session = ConnHibernate.getInstance().getSession();
 		Transaction t = null;
 		Integer id = null;
 
@@ -48,7 +48,7 @@ public class TodoFileHibernateDao implements Dao<TodoFile> {
 	}
 
 	public void delete(TodoFile todoFile) {
-		Session session = ConnHibernate.getSession();
+		Session session = ConnHibernate.getInstance().getSession();
 		Transaction t = null;
 
 		try {

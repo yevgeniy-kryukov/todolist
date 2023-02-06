@@ -1,6 +1,7 @@
 package org.ykryukov.todolist.model.todo;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.ykryukov.holidaysws.HolidaysWebServiceClient;
 import org.ykryukov.todolist.model.todofile.TodoFile;
 
 @Entity
@@ -39,6 +42,11 @@ public class Todo {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "todo")
 	@OrderBy("id DESC")
 	private List<TodoFile> todoFiles;
+	
+	@Transient
+	public boolean isHoliday() {
+		return HolidaysWebServiceClient.getInstance().isHoliday(new SimpleDateFormat("yyyy-MM-dd").format(dateTimeAction));
+	}
 
 	public List<TodoFile> getTodoFiles() {
 		return todoFiles;

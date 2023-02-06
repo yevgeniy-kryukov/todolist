@@ -123,7 +123,7 @@ public class UploadFileServlet extends HttpServlet {
 	 * @override
 	 */
 	public void destroy() {
-		ConnHibernate.closeAll();
+		ConnHibernate.getInstance().closeAll();
 	}
 
 }
