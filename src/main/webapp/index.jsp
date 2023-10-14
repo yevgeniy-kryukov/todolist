@@ -5,6 +5,12 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Список дел</title>
+	<style type="text/css">
+	.done {
+		text-decoration: line-through;
+		color: gray;
+	}
+	</style>
 </head>
 <body>
 	<h2>Список дел</h2>
@@ -15,15 +21,15 @@
 		<th>Запланированное дата и время</th>
 		<th>Дело</th>
 		<th>Выпадает на праздник</th>
-		<th>Сделано?</th>
+		<!--<th>Сделано?</th>-->
 	</tr>
 	<c:forEach var="todo" items="${todoList}">
 	 <tr>
 	 	<td align="center">${todo.id}</td>
-	 	<td>${todo.dateTimeAction}</td>
-	    <td>${todo.textAction}</td>
+	 	<td ${todo.isDone ? "class=\"done\"": " "}">${todo.dateTimeAction}</td>
+	    <td ${todo.isDone ? "class=\"done\"": " "}">${todo.textAction}</td>
 	   	<td align="center">${todo.isHoliday() ? "да": "нет"}</td>
-	    <td align="center">${todo.isDone ? "да": "нет"}</td>
+	    <!--<td align="center">${todo.isDone ? "да": "нет"}</td>-->
 	    <td>
 		    <a href='<c:url value="/edit?id=${todo.id}" />'>Изменить</a> 
 		    <c:if test="${!todo.isDone && todo.getTodoFiles().size() == 0}">|
